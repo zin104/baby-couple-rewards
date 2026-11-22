@@ -136,7 +136,7 @@ try{
   }
   startMemberSession(user);
  });
-}catch(e){msg.textContent="Firebase 尚未設定完成，請檢查 firebase-config.js。"}
+}catch(e){msg.textContent="Firebase 錯誤："+e.message;console.error(e);}
 document.getElementById("login").onclick=async()=>{
  msg.textContent="正在登入…";
  try{await signInWithEmailAndPassword(auth,document.getElementById("email").value.trim(),document.getElementById("password").value)}
