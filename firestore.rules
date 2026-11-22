@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isCoupleMember() {
+      return request.auth != null
+        && request.auth.uid in [
+          "PASTE_ADMIN_USER_UID",
+          "PASTE_PARTNER_USER_UID"
+        ];
+    }
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.uid == "PASTE_ADMIN_USER_UID";
+    }
+
+    match /coupleRewards/main {
+      allow read: if isCoupleMember();
+      allow write: if isAdmin();
+
+      match /history/{entry} {
+        allow read: if isCoupleMember();
+        allow create: if isAdmin()
+          && request.resource.data.by == request.auth.uid
+          && request.resource.data.delta is int
+          && request.resource.data.reason is string;
+        allow update, delete: if false;
+      }
+    }
+  }
+}

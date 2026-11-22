@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f7f1e8">
+<title>專屬温成龍的幸福集點卡</title>
+<style>
+:root{--bg:#f7f1e8;--card:#fffdf9;--ink:#705b49;--muted:#a18b77;--line:#eadfd2;--pink:#ead2cf;--brown:#9a8069;--green:#66836d;--red:#a56f68}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(145deg,#f8f2e9,#f3e8df);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;min-height:100vh}
+main{width:min(720px,calc(100% - 28px));margin:24px auto;padding-bottom:32px}
+.hero,.panel{background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:0 12px 35px #795f4b12}
+.hero{text-align:center;padding:30px 20px 26px;background:radial-gradient(circle at 90% 5%,#f4e4df 0,transparent 34%),var(--card)}
+.kicker{letter-spacing:.13em;font-size:11px;color:var(--muted)}h1{font-weight:650;font-size:clamp(25px,6vw,36px);line-height:1.35;margin:10px 0 5px}.subtitle{color:var(--muted);font-size:14px}
+.score{font-size:54px;font-weight:700;margin:20px 0 4px;font-variant-numeric:tabular-nums}.score small{font-size:19px;color:var(--muted);font-weight:500}
+.progress{height:10px;background:#efe6dc;border-radius:20px;overflow:hidden;margin:12px auto 8px;max-width:420px}.bar{height:100%;width:0;background:linear-gradient(90deg,#d9bdb4,#b99c83);border-radius:20px;transition:width .25s}
+.status{color:var(--muted);font-size:13px}.reward{margin:20px auto 0;padding:14px;border-radius:16px;background:#f8f0eb;max-width:440px;font-size:15px}
+.panel{margin-top:15px;padding:21px}.panel h2{font-size:18px;margin:0 0 14px}.row{display:flex;gap:9px;flex-wrap:wrap}.btn{border:0;border-radius:13px;padding:12px 16px;background:#e9d8cf;color:#624f40;font-weight:650;font-size:14px;cursor:pointer}.btn.primary{background:#927761;color:white}.btn.light{background:#f5eee7}.btn:disabled{opacity:.45;cursor:not-allowed}
+input{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:12px;background:#fffdfa;color:var(--ink);font:inherit;margin:6px 0 12px}label{font-size:13px;color:var(--muted)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.hidden{display:none!important}
+.entry{padding:13px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;font-size:14px}.entry:last-child{border:0}.plus{color:var(--green)}.minus{color:var(--red)}.small{font-size:12px;color:var(--muted)}.notice{padding:12px;background:#f8f0eb;border-radius:12px;color:var(--muted);font-size:13px;margin-top:12px}.topline{display:flex;align-items:center;justify-content:space-between;gap:10px}.role{font-size:12px;color:var(--muted);background:#f5eee7;border-radius:20px;padding:6px 10px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:22px}
+@media(max-width:480px){main{margin:14px auto}.panel{padding:17px}.grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body><main>
+<section class="panel" id="loginPanel">
+  <div class="kicker">A LITTLE REWARD FOR MY FAVORITE PERSON</div>
+  <h1>♡ 專屬温成龍的幸福集點卡 ♡</h1>
+  <div class="subtitle">每一個小小幸福，都值得好好收藏。</div>
+  <h2 style="margin-top:22px">會員登入</h2>
+  <label for="email">電子郵件</label><input id="email" type="email" placeholder="輸入你的 Email" autocomplete="username">
+  <label for="password">密碼</label><input id="password" type="password" placeholder="輸入密碼" autocomplete="current-password">
+  <button class="btn primary" id="login" style="width:100%">登入幸福集點卡</button>
+  <div class="notice" id="authMsg">請使用女朋友或温成龍的專屬帳號登入。只有女朋友能管理點數。</div>
+</section>
+
+<div id="memberArea" class="hidden">
+  <section class="hero">
+    <div class="topline"><span class="kicker">OUR LITTLE COLLECTION OF HAPPINESS</span><span class="role" id="roleLabel">會員</span></div>
+    <h1>♡ 專屬温成龍的幸福集點卡 ♡</h1>
+    <div class="subtitle">每一個小小幸福，都值得好好收藏。</div>
+    <div class="score"><span id="points">0</span><small> / 30 點</small></div>
+    <div class="progress"><div class="bar" id="bar"></div></div>
+    <div class="status" id="remaining">距離神秘驚喜還有 30 點</div>
+    <div class="reward" id="reward">🎁 集滿 30 點，就能解鎖女朋友準備的神秘驚喜。</div>
+  </section>
+
+  <section class="panel hidden" id="adminPanel">
+    <h2>今天也要累積幸福 ♡</h2>
+    <label for="reason">這次集點的小理由</label>
+    <input id="reason" maxlength="100" placeholder="例如：今天有好好打電話、一起約會">
+    <div class="row" style="margin:8px 0 16px">
+      <button class="btn primary add" data-points="1">＋ 1 點</button>
+      <button class="btn primary add" data-points="2">＋ 2 點</button>
+      <button class="btn primary add" data-points="3">＋ 3 點</button>
+    </div>
+    <div class="grid">
+      <button class="btn light sub" data-points="1">－ 扣 1 點</button>
+      <button class="btn light sub" data-points="2">－ 扣 2 點</button>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" id="redeem" disabled>🎁 兌換神秘驚喜</button></div>
+    <div class="notice">只有女朋友可以操作點數。點數最多 30 點、最低 0 點，每次操作都會留下紀錄。</div>
+  </section>
+
+  <section class="panel">
+    <h2>我們的小小回憶 📖</h2>
+    <div id="history"><div class="small">正在載入紀錄…</div></div>
+  </section>
+  <section class="panel">
+    <div class="row" style="align-items:center;justify-content:space-between">
+      <div class="small" id="signedInAs">已登入</div>
+      <button class="btn light" id="logout">登出</button>
+    </div>
+  </section>
+</div>
+<footer>Made with ♡ just for 温成龍</footer>
+</main>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { getFirestore, doc, runTransaction, collection, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { firebaseConfig, ADMIN_UID, PARTNER_UID } from "./firebase-config.js";
+
+const loginPanel=document.getElementById("loginPanel"), memberArea=document.getElementById("memberArea");
+const msg=document.getElementById("authMsg"), adminPanel=document.getElementById("adminPanel");
+let auth,db,stateUnsub=null,historyUnsub=null;
+const stateRef=()=>doc(db,"coupleRewards","main");
+const historyRef=()=>collection(db,"coupleRewards","main","history");
+const isAdmin=user=>!!user && !!ADMIN_UID && user.uid===ADMIN_UID;
+const isMember=user=>!!user && [ADMIN_UID,PARTNER_UID].filter(Boolean).includes(user.uid);
+
+function render(data={points:0,redeemed:false}) {
+ const p=Math.max(0,Math.min(30,Number(data.points)||0));
+ document.getElementById("points").textContent=p;
+ document.getElementById("bar").style.width=(p/30*100)+"%";
+ document.getElementById("remaining").textContent=p>=30?"已經集滿 30 點！可以兌換驚喜了 ♡":`距離神秘驚喜還有 ${30-p} 點`;
+ document.getElementById("reward").textContent=data.redeemed?"🎉 神秘驚喜已兌換！這份幸福要好好收藏。":"🎁 集滿 30 點，就能解鎖女朋友準備的神秘驚喜。";
+ const redeem=document.getElementById("redeem");
+ if(redeem) redeem.disabled=!(p>=30&&!data.redeemed);
+}
+function showHistory(items){
+ const box=document.getElementById("history");
+ if(!items.length){box.innerHTML='<div class="small">還沒有紀錄，從第一個小幸福開始吧 ♡</div>';return}
+ box.innerHTML=items.map(x=>`<div class="entry"><div><div>${escapeHtml(x.reason||"幸福日常")}</div><div class="small">${x.createdAt?.toDate?x.createdAt.toDate().toLocaleString("zh-TW"):"剛剛"}</div></div><strong class="${x.delta>0?"plus":x.delta<0?"minus":""}">${x.delta>0?"+":""}${x.delta} 點</strong></div>`).join("");
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function stopListeners(){if(stateUnsub)stateUnsub();if(historyUnsub)historyUnsub();stateUnsub=null;historyUnsub=null}
+async function updatePoints(delta){
+ if(!isAdmin(auth.currentUser)) throw new Error("只有管理者可以操作點數。");
+ const reason=document.getElementById("reason").value.trim()||"幸福日常";
+ await runTransaction(db,async tx=>{
+  const ref=stateRef(),snap=await tx.get(ref),current=snap.exists()?snap.data():{points:0,redeemed:false};
+  if(current.redeemed) throw new Error("這份驚喜已經兌換過囉。");
+  const old=Number(current.points)||0,next=Math.max(0,Math.min(30,old+delta));
+  if(next===old) throw new Error(delta<0?"點數已經是 0 點。":"點數已經滿 30 點囉！");
+  tx.set(ref,{points:next,redeemed:false,updatedAt:serverTimestamp()},{merge:true});
+  const h=doc(historyRef());tx.set(h,{delta:next-old,reason,createdAt:serverTimestamp(),by:auth.currentUser.uid});
+ });
+ document.getElementById("reason").value="";
+}
+function startMemberSession(user){
+ stopListeners();
+ loginPanel.classList.add("hidden");memberArea.classList.remove("hidden");
+ const adminUser=isAdmin(user);
+ adminPanel.classList.toggle("hidden",!adminUser);
+ document.getElementById("roleLabel").textContent=adminUser?"管理者・女朋友":"專屬會員・温成龍";
+ document.getElementById("signedInAs").textContent=`已登入：${user.email||"會員"}`;
+ stateUnsub=onSnapshot(stateRef(),s=>render(s.exists()?s.data():{}),e=>msg.textContent="讀取點數失敗："+e.message);
+ historyUnsub=onSnapshot(query(historyRef(),orderBy("createdAt","desc")),s=>showHistory(s.docs.map(d=>d.data())),e=>document.getElementById("history").textContent="讀取紀錄失敗："+e.message);
+}
+try{
+ const app=initializeApp(firebaseConfig);auth=getAuth(app);db=getFirestore(app);
+ onAuthStateChanged(auth,async user=>{
+  if(!user){stopListeners();memberArea.classList.add("hidden");loginPanel.classList.remove("hidden");return}
+  if(!isMember(user)){
+   stopListeners();await signOut(auth);msg.textContent="這個帳號尚未被加入這張專屬集點卡，請確認使用正確帳號。";return;
+  }
+  startMemberSession(user);
+ });
+}catch(e){msg.textContent="Firebase 尚未設定完成，請檢查 firebase-config.js。"}
+document.getElementById("login").onclick=async()=>{
+ msg.textContent="正在登入…";
+ try{await signInWithEmailAndPassword(auth,document.getElementById("email").value.trim(),document.getElementById("password").value)}
+ catch(e){msg.textContent="登入失敗，請確認 Email 和密碼是否正確。"}
+};
+document.getElementById("logout").onclick=()=>signOut(auth);
+document.getElementById("redeem").onclick=async()=>{
+ if(!confirm("確定要兌換女朋友準備的神秘驚喜嗎？兌換後會留下紀錄。"))return;
+ try{
+  await runTransaction(db,async tx=>{
+   const ref=stateRef(),snap=await tx.get(ref),data=snap.exists()?snap.data():{points:0};
+   if(Number(data.points)<30)throw new Error("還沒集滿 30 點喔！");
+   if(data.redeemed)throw new Error("這份驚喜已經兌換過囉。");
+   tx.set(ref,{redeemed:true,redeemedAt:serverTimestamp()},{merge:true});
+   const h=doc(historyRef());tx.set(h,{delta:0,reason:"🎁 已兌換女朋友準備的神秘驚喜",createdAt:serverTimestamp(),by:auth.currentUser.uid});
+  });
+ }catch(e){alert(e.message)}
+};
+document.querySelectorAll(".add").forEach(b=>b.onclick=async()=>{try{await updatePoints(Number(b.dataset.points))}catch(e){alert(e.message)}});
+document.querySelectorAll(".sub").forEach(b=>b.onclick=async()=>{try{await updatePoints(-Number(b.dataset.points))}catch(e){alert(e.message)}});
+</script>
+</body></html>
