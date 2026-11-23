@@ -122,7 +122,7 @@ function startMemberSession(user){
  loginPanel.classList.add("hidden");memberArea.classList.remove("hidden");
  const adminUser=isAdmin(user);
  adminPanel.classList.toggle("hidden",!adminUser);
- document.getElementById("roleLabel").textContent=adminUser?"管理者・女朋友":"專屬會員・温承龍";
+ document.getElementById("roleLabel").textContent=user.uid===ADMIN_UID?"共同管理者・女朋友":"共同管理者・温承龍";
  document.getElementById("signedInAs").textContent=`已登入：${user.email||"會員"}`;
  stateUnsub=onSnapshot(stateRef(),s=>render(s.exists()?s.data():{}),e=>msg.textContent="讀取點數失敗："+e.message);
  historyUnsub=onSnapshot(query(historyRef(),orderBy("createdAt","desc")),s=>showHistory(s.docs.map(d=>d.data())),e=>document.getElementById("history").textContent="讀取紀錄失敗："+e.message);
