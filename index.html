@@ -85,7 +85,7 @@ const msg=document.getElementById("authMsg"), adminPanel=document.getElementById
 let auth,db,stateUnsub=null,historyUnsub=null;
 const stateRef=()=>doc(db,"coupleRewards","main");
 const historyRef=()=>collection(db,"coupleRewards","main","history");
-const isAdmin=user=>!!user && !!ADMIN_UID && user.uid===ADMIN_UID;
+const isAdmin=user=>!!user && [ADMIN_UID,PARTNER_UID].filter(Boolean).includes(user.uid);
 const isMember=user=>!!user && [ADMIN_UID,PARTNER_UID].filter(Boolean).includes(user.uid);
 
 function render(data={points:0,redeemed:false}) {
