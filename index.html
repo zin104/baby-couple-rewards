@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#f7f1e8">
-<title>專屬温成龍的幸福集點卡</title>
+<title>專屬温承龍的幸福集點卡</title>
 <style>
 :root{--bg:#f7f1e8;--card:#fffdf9;--ink:#705b49;--muted:#a18b77;--line:#eadfd2;--pink:#ead2cf;--brown:#9a8069;--green:#66836d;--red:#a56f68}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(145deg,#f8f2e9,#f3e8df);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;min-height:100vh}
@@ -24,13 +24,13 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:22px}
 <body><main>
 <section class="panel" id="loginPanel">
   <div class="kicker">A LITTLE REWARD FOR MY FAVORITE PERSON</div>
-  <h1>♡ 專屬温成龍的幸福集點卡 ♡</h1>
+  <h1>♡ 專屬温承龍的幸福集點卡 ♡</h1>
   <div class="subtitle">每一個小小幸福，都值得好好收藏。</div>
   <h2 style="margin-top:22px">會員登入</h2>
   <label for="email">電子郵件</label><input id="email" type="email" placeholder="輸入你的 Email" autocomplete="username">
   <label for="password">密碼</label><input id="password" type="password" placeholder="輸入密碼" autocomplete="current-password">
   <button class="btn primary" id="login" style="width:100%">登入幸福集點卡</button>
-  <div class="notice" id="authMsg">請使用女朋友或温成龍的專屬帳號登入。只有女朋友能管理點數。</div>
+  <div class="notice" id="authMsg">請使用女朋友或温承龍的專屬帳號登入。只有女朋友能管理點數。</div>
 </section>
 
 <div id="memberArea" class="hidden">
@@ -72,7 +72,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:22px}
     </div>
   </section>
 </div>
-<footer>Made with ♡ just for 温成龍</footer>
+<footer>Made with ♡ just for 温承龍</footer>
 </main>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
@@ -122,7 +122,7 @@ function startMemberSession(user){
  loginPanel.classList.add("hidden");memberArea.classList.remove("hidden");
  const adminUser=isAdmin(user);
  adminPanel.classList.toggle("hidden",!adminUser);
- document.getElementById("roleLabel").textContent=adminUser?"管理者・女朋友":"專屬會員・温成龍";
+ document.getElementById("roleLabel").textContent=adminUser?"管理者・女朋友":"專屬會員・温承龍";
  document.getElementById("signedInAs").textContent=`已登入：${user.email||"會員"}`;
  stateUnsub=onSnapshot(stateRef(),s=>render(s.exists()?s.data():{}),e=>msg.textContent="讀取點數失敗："+e.message);
  historyUnsub=onSnapshot(query(historyRef(),orderBy("createdAt","desc")),s=>showHistory(s.docs.map(d=>d.data())),e=>document.getElementById("history").textContent="讀取紀錄失敗："+e.message);
